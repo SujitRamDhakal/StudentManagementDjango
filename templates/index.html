@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <title>Student Management System</title>
 </head>
 <body>
+    <h1>Studnet Management System</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Name</label>
+        <input type="text" name="name">
+        <label for="age">Age</label>
+        <input type="text" name="age">
+        <label for="address">Address</label>
+        <input type="text" name="address"><br>
+        <input type="submit" value="Add/Update">
+    </form>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Adddress</th>
+            <th></th>
+        </tr>
+        {% for x in students %}
+        <tr>
+            <td>{{x.name}}</td>
+            <td>{{x.age}}</td>
+            <td>{{x.address}}</td>
+            <td><a href="#">Edit</a>  <a href="#">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

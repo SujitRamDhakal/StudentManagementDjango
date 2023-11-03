@@ -1,0 +1,33 @@
+<script>
+    $('document').ready(function(){
+        $('#submit').click(function(){
+            console.log("sujit");
+            let nm = $("#name").val()
+            let age = $("#age").val()
+            let address = $("#address").val()
+            let csr = $("input[name=csrfmiddlewaretoken]").val()
+            if(nm == "" || age == "" || address == ""){
+                alert("please enter name age or address")
+            }
+            console.log(nm,age,address)
+            mydata = {name:nm, age:age, address:address, csrfmiddlewaretoken:csr,}
+            $.ajax({
+                method: "POST",
+                url : "{% url 'save' %}",
+                data: mydata,
+                success: function(data){
+                    x = data.stddata
+                    // console.log(data.status)
+                    if(data.status == 'save'){
+                        console.log("submitted")
+                        for(let i = 0; i < x.length; i++)
+                        $('form')[0].reset()
+                    }
+                    if(data.status == 0){
+                        console.log("unsuccessful")
+                    }
+                }
+            })
+        })
+    })
+</script>

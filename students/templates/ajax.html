@@ -2,6 +2,7 @@
     $('document').ready(function(){
         $('#submit').click(function(){
             console.log("sujit");
+            let output = ""
             let nm = $("#name").val()
             let age = $("#age").val()
             let address = $("#address").val()
@@ -9,8 +10,8 @@
             if(nm == "" || age == "" || address == ""){
                 alert("please enter name age or address")
             }
-            console.log(nm,age,address)
-            mydata = {name:nm, age:age, address:address, csrfmiddlewaretoken:csr,}
+            // console.log(nm,age,address)
+            mydata = {name:nm, age:age, address:address, csrfmiddlewaretoken:csr}
             $.ajax({
                 method: "POST",
                 url : "{% url 'save' %}",
@@ -21,13 +22,40 @@
                     if(data.status == 'save'){
                         console.log("submitted")
                         for(let i = 0; i < x.length; i++)
+                        {
+                            output += "<tr><td>" + x[i].name + "</td><td>" + x[i].age + "</td><td>" + x[i].address + 
+                                "</td><td>" + x[i].age + "</td><td> <input type='submit' value='Edit' id=" + x[i].id +" class='edit' /> <input type='submit' value='Delete' id=" + x[i].id +" class='delete' /> </td></tr>" 
+                        }
+                        $("#body").html(output)
+
                         $('form')[0].reset()
                     }
                     if(data.status == 0){
                         console.log("unsuccessful")
                     }
-                }
+                } 
             })
         })
     })
+        $('#body').on('click','.delete',function(){
+            let id = $(this).attr("id")
+            let csr = $("input[name=csrfmiddlewaretoken]").val()
+            mydata = {id:id, csrfmiddlewaretoken:csr}
+            mythis = this
+            $.ajax({
+                method: "POST",
+                url : "{% url 'delete' %}",
+                data: mydata,
+                success: function(data){
+                    if(data.status == 1){
+                        console.log('delete')
+                        $(mythis).closest("tr").fadeOut()
+                    }
+                    if(data.status == 0 ){
+                        console.log('cannot delete')
+                    }
+                }
+
+        })
+})
 </script>

@@ -26,4 +26,17 @@ def save(request):
             return JsonResponse({'status':'save','stddata':liststddata})
         else:
              return JsonResponse({'status':0})  
+        
+
+def delete(request):
+     if request.method == 'POST':
+        id = request.POST.get("id")
+        student = Student.objects.get(pk=id)
+        student.delete()
+
+        return JsonResponse({'status':1})
+     else:
+          return JsonResponse({'status':0})
+
+
              

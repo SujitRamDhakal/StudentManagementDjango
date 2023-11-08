@@ -21,20 +21,24 @@
         <input type="button" value="Add/Update" id="submit"/>
     </form>
     <table>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Adddress</th>
-            <th></th>
-        </tr>
-        {% for x in students %}
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Adddress</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="body">
+            {% for x in students %}
         <tr>
             <td>{{x.name}}</td>
             <td>{{x.age}}</td>
             <td>{{x.address}}</td>
-            <td><input type="submit" value="Edit" id="{{x.id}}">  <input type="submit" value="Delete" id="{{x.id}}"></td>
+            <td><input type="submit" value="Edit" id="{{x.id}}" class="edit">  <input type="submit" value="Delete" id="{{x.id}}" class="delete"></td>
         </tr>
         {% endfor %}
+        </tbody>
     </table>
     <script src="{% static 'students/js/jquery.js' %}"></script>
     {% include "ajax.html" %}

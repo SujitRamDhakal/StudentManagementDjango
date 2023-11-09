@@ -1,8 +1,10 @@
 <script>
+    // for create
     $('document').ready(function(){
         $('#submit').click(function(){
             console.log("sujit");
             let output = ""
+            let id = $("#stuid").val() 
             let nm = $("#name").val()
             let age = $("#age").val()
             let address = $("#address").val()
@@ -11,11 +13,12 @@
                 alert("please enter name age or address")
             }
             // console.log(nm,age,address)
-            mydata = {name:nm, age:age, address:address, csrfmiddlewaretoken:csr}
+            mydata = {id:id,name:nm, age:age, address:address, csrfmiddlewaretoken:csr}
             $.ajax({
                 method: "POST",
                 url : "{% url 'save' %}",
                 data: mydata,
+                dataType: "json",
                 success: function(data){
                     x = data.stddata
                     // console.log(data.status)
@@ -27,7 +30,7 @@
                                 "</td><td>" + x[i].age + "</td><td> <input type='submit' value='Edit' id=" + x[i].id +" class='edit' /> <input type='submit' value='Delete' id=" + x[i].id +" class='delete' /> </td></tr>" 
                         }
                         $("#body").html(output)
-
+                        $('#stuid').val('')
                         $('form')[0].reset()
                     }
                     if(data.status == 0){
@@ -37,6 +40,7 @@
             })
         })
     })
+    // for delete
         $('#body').on('click','.delete',function(){
             let id = $(this).attr("id")
             let csr = $("input[name=csrfmiddlewaretoken]").val()
@@ -56,6 +60,30 @@
                     }
                 }
 
+            })
+        
         })
-})
+        // for edit
+        $('#body').on('click','.edit',function(){
+            let id = $(this).attr("id")
+            let csr = $("input[name=csrfmiddlewaretoken]").val()
+            mydata = {id:id, csrfmiddlewaretoken:csr}
+            mythis = this
+            $.ajax({
+                method: "POST",
+                url : "{% url 'edit' %}",
+                data: mydata,
+                dataType: "json",
+                success: function(data){
+                        console.log(data)
+                        $("#stuid").val(data.id)
+                        $("#name").val(data.name)
+                        $("#age").val(data.age)
+                        $("#address").val(data.address)
+                }
+
+            })
+        
+        })
+        
 </script>

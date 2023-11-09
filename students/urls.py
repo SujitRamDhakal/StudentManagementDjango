@@ -6,4 +6,5 @@ urlpatterns = [
     path('',index),
     path('save/',save,name="save"),
     path('delete/',delete,name="delete"),
+    path('edit/',edit,name="edit"),
 ]

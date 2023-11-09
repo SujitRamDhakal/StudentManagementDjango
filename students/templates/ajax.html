@@ -2,7 +2,7 @@
     // for create
     $('document').ready(function(){
         $('#submit').click(function(){
-            console.log("sujit");
+            // console.log("sujit");
             let output = ""
             let id = $("#stuid").val() 
             let nm = $("#name").val()
@@ -75,7 +75,7 @@
                 data: mydata,
                 dataType: "json",
                 success: function(data){
-                        console.log(data)
+                        // console.log(data)
                         $("#stuid").val(data.id)
                         $("#name").val(data.name)
                         $("#age").val(data.age)
